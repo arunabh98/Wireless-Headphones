@@ -4,6 +4,7 @@
 
 const char* ssid = "Tinkerers' Lab";
 const char* password = "tinker@tl";
+int ledPin = 5;
 
 ESP8266WebServer server(80);
 
@@ -21,15 +22,20 @@ void handleLogin(){
   }
   if (server.hasArg("CHARACTER")){
     Serial.println(server.arg("CHARACTER"));
+    char charBuf[2];
+    String characters = server.arg("CHARACTER"); 
+    characters.toCharArray(charBuf, 2);
+    int sound = 255 - constrain(int(charBuf[0]), 0, 255);
+    analogWrite(ledPin, sound);
     server.sendHeader("Location","/");
     server.sendHeader("Cache-Control","no-cache");
     server.sendHeader("Set-Cookie","ESPSESSIONID=1");
     server.send(301);
     return;
   }
-  String content = "<html><body><form action='/login' method='POST'><br>";
+  String content = "<html><body><form action='/login' method='POST'>";
   content += "Enter character:<input type='text' name='CHARACTER' placeholder='enter any character'><br>";
-  content += "<input type='submit' name='SUBMIT' value='Submit'></form><br>";
+  content += "<input type='submit' name='SUBMIT' value='Submit'></form>";
   server.send(200, "text/html", content);
 }
 
