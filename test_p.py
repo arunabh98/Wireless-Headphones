@@ -1,17 +1,11 @@
-import requests
-import wave
-import struct
+import wavefile
 import sys
 
-def wav_to_floats(wave_file):
-    w = wave.open(wave_file)
-    astr = w.readframes(w.getnframes())
-    # convert binary chunks to short 
-    a = struct.unpack("%ih" % (w.getnframes()* w.getnchannels()), astr)
-    a = [float(val) / pow(2, 15) for val in a]
-    return a
+# returns the contents of the wav file as a double precision float array
+def wav_to_floats(filename = 'test1.wav'):
+    w = wavefile.load(filename)
+    return w[1][0]
 
-# read the wav file specified as first command line arg
 signal = wav_to_floats(sys.argv[1])
 print "read "+str(len(signal))+" frames"
-print  "in the range "+str(min(signal))+" to "+str(min(signal))
+print  "in the range "+str(min(signal))+" to "+str(max(signal))
