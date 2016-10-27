@@ -39,16 +39,14 @@ void handleLogin(){
   server.send(200, "text/html", content);
 }
 
-//root page can be accessed only if authentification is ok
 void handleRoot(){
   String header;
-  String content = "<html><body><form action='/login' method='POST'><br>";
+  String content = "<html><body><form action='/login' method='POST'>";
   content += "Enter character:<input type='text' name='CHARACTER' placeholder='enter any character'><br>";
-  content += "<input type='submit' name='SUBMIT' value='Submit'></form><br>";
+  content += "<input type='submit' name='SUBMIT' value='Submit'></form>";
   server.send(200, "text/html", content);
 }
 
-//no need authentification
 void handleNotFound(){
   String message = "File Not Found\n\n";
   message += "URI: ";
