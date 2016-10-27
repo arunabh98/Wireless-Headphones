@@ -22,11 +22,12 @@ void handleLogin(){
   }
   if (server.hasArg("CHARACTER")){
     Serial.println(server.arg("CHARACTER"));
-    char charBuf[2];
-    String characters = server.arg("CHARACTER"); 
-    characters.toCharArray(charBuf, 2);
-    int sound = 255 - constrain(int(charBuf[0]), 0, 255);
+    float unsc = server.arg("CHARACTER").toFloat();
+    Serial.println(unsc);
+    float sound = map(unsc, -100, 100, 0, 255);
+    Serial.println(sound);
     analogWrite(ledPin, sound);
+
     server.sendHeader("Location","/");
     server.sendHeader("Cache-Control","no-cache");
     server.sendHeader("Set-Cookie","ESPSESSIONID=1");
