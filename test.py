@@ -5,9 +5,9 @@ import sys
 import wave
 import struct
 
-wrd=wave.open('/home/pranav/Documents/my_projects/Wireless-Headphones/music/Love_me_like_you_do.wav',"r")
+wrd=wave.open('/home/pranav/Documents/my_projects/Wireless-Headphones/music/test1.wav',"r")
 
-fin = open("/home/pranav/Documents/my_projects/Wireless-Headphones/music/Love_me_like_you_do.wav","rb") # Read wav file, "r flag" - read, "b flag" - binary 
+fin = open("/home/pranav/Documents/my_projects/Wireless-Headphones/music/test1.wav","rb") # Read wav file, "r flag" - read, "b flag" - binary 
 ChunkSizeString=fin.read(4) # Total Size of File in Bytes - 8 Bytes
 ChunkSize=struct.unpack('I',ChunkSizeString) # 'I' Format is to to treat the 4 bytes as unsigned 32-bit inter
 TotalSize=ChunkSize[0]+8 # The subscript is used because struct unpack returns everything as tuple
@@ -20,11 +20,12 @@ data_len = 1000000                             #one time data length
 for i in range(TotalSize/data_len):       
 	for j in range(data_len): 
 		SString = wrd.readframes(1)
-		if struct.calcsize('b') < len(SString):
+		if struct.calcsize('B') < len(SString):
 			break
 		else:
-			S=struct.unpack_from('b',SString)
+			S=struct.unpack_from('B',SString)
 			print(S[0])
+			print(type(S[0]))
 			#r = requests.post('http://192.168.0.112/login', data = {'CHARACTER':S[0]}) 
 			#time.sleep(0.0000226757);
 print('1000000 integers sent')	
